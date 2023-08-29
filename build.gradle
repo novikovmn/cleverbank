@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'war'
+    //	id 'jacoco'
+}
+
+group 'by.novikov.bank'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.8.1'
+    javaVersion = '17'
+    servletVersion = '4.0.1'
+    lombokVersion = '1.18.28'
+    postgreVersion = '42.6.0'
+    snakeYamlVersion = '2.2'
+    jacocoVersion = '0.8.10'
+    gradleWrapperVersion = '8.2.1'
+}
+
+sourceCompatibility = "${javaVersion}"
+targetCompatibility = "${javaVersion}"
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    implementation "org.yaml:snakeyaml:${snakeYamlVersion}"
+    implementation "org.postgresql:postgresql:${postgreVersion}"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    compileOnly "javax.servlet:javax.servlet-api:${servletVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
+}
+
+test {
+    useJUnitPlatform()
+    // finalizedBy jacocoTestReport
+}
+
+wrapper{
+    gradleVersion "${gradleWrapperVersion}"
+}
+
+//jacoco {
+//   toolVersion = "${jacocoVersion}"
+//}
